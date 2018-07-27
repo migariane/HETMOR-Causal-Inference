@@ -207,6 +207,8 @@ dev.off()
 # Monte Carlo Simulation #
 ##########################
 
+# The absolute bias with respect to the marginal causal odds ratio is reported, based on a sample size of 5000, and 10.000 simulation runs.
+
 R <- 10000
 
 results_reg <- matrix(NA,ncol = 4,nrow = R)

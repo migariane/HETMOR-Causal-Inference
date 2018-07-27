@@ -1,5 +1,5 @@
 ### Title  
-Effect modification and collapsability when estimating the effectiveness of public health interventions: A Monte Carlo Simulation   
+Effect modification and collapsability when estimating the effectiveness of public health interventions: A Monte Carlo Simulation comparing classical multivariable regression adjustment versus the G-Formula based on a cancer epidemiology illustration  
 
 ### Authors
 Miguel Angel Luque-Fernandez* 1,2,3; Daniel Redondo Sanchez 3; Michael Schomaker 4    

@@ -28,11 +28,8 @@
 ##############################################################################################
 
 # Install R packages
-# install.packages(c("simcausal","SuperLearner","tmle","ltmle","ggplot2"))
+# install.packages(c("simcausal","ggplot2"))
 library(simcausal)
-library(SuperLearner)
-library(tmle)
-library(ltmle)
 library(ggplot2)
 
 ##############################################################################################################################################

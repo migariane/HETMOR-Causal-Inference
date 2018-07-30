@@ -19,8 +19,8 @@ The **American Journal of Public Health** series "Evaluating Public Health Inter
 
 To identify the MOR, classical epidemiologic methods, such as standard multivariable logistic regression models where the treatment is included as a covariate in the analysis, require the assumption that the effect measure of the treatment of interest is constant across the levels of confounders included in the model.[4] However, in observational studies evaluating the effect of public health interventions, this is often not the case (i.e. the effect of the intervention might differs across individuals with different susceptibilities or characgteristics. The effect is assumed to be heterogeneous at population level). In 1986, a seminal paper [5] demonstrated that under untestable causal assumptions (conditional exchangeability, positivity, consistency, and non-interference), a consistent estimate of the MOR can be obtained using the G-formula [5] (a generalisation of standardisation with respect to the confounder distribution) as follows: 
 
-![Figure Link](https://github.com/migariane/hetmor/blob/master/MOR.png)  
-where $P(W=w)$ refers to the marginal probability of w.  
+<div style=text-align:"center">![Figure Link](https://github.com/migariane/hetmor/blob/master/MOR.png)<\div>
+where P(W=w) refers to the marginal probability of w.  
  
 G-computation,[6] based on the estimation of the components in the G-formula, allows for a treatment effect that may vary across the levels of the confounders. 
 

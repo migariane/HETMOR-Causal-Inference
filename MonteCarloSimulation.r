@@ -1,5 +1,5 @@
 #######################################################################################################
-# Miguel Angel Luque Fernandez, Daniel Redondo Sanchez and Michael Schomaker
+# Miguel Angel Luque Fernandez, Daniel Redondo-Sanchez and Michael Schomaker
 # American Journal of Public Health (AJPH)
 # Letter to the Editor 
 # Title:
@@ -8,7 +8,7 @@
 # multivariable regression adjustment versus the G-Formula based on a cancer epidemiology illustration
 #######################################################################################################
 
-# Copyright (c) 2018  <Miguel Angel Luque-Fernandez, Daniel Redondo Sanchez and Michael Schomaker>
+# Copyright (c) 2018  <Miguel Angel Luque-Fernandez, Daniel Redondo-Sanchez and Michael Schomaker>
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -29,6 +29,7 @@
 
 # Install R packages
 # install.packages(c("simcausal", "SuperLearner", "tmle", "ltmle", "ggplot2"))
+ devtools::INST
 library(simcausal)
 library(SuperLearner)
 library(tmle)
@@ -282,7 +283,7 @@ BIAS_reg <- abs(apply(results_reg, 2, mean) - c(True_mor_M1, True_mor_M2, True_m
 BIAS_g   <- abs(apply(results_g,   2, mean) - c(True_mor_M1, True_mor_M2, True_mor_M3, True_mor_M4))
 
 # Plot Bias.pdf
-pdf("Figure 1.pdf", width = 8) 
+pdf("Figure2.pdf", width = 8) 
   plot(NA, xlab = "Simulation setting", ylab = "Absolute bias", cex.lab = 1.3, lwd = 2, axes = FALSE, ylim = c(-0.001, 0.12), xlim = c(0.8, 4.2))
   axis(side = 1, at = 1:4, labels = c("no EM*", "some EM", "EM", "strong EM"), cex.axis = 1.2)
   axis(side = 2, at = seq(0, 0.12, 0.02), las = 1, cex.axis = 1.2)   # ),labels = c("", "2%", "4%", "6%", "8%", "10%", "12%"))
@@ -294,7 +295,7 @@ pdf("Figure 1.pdf", width = 8)
 dev.off()
 
 # Plot Bias.tiff
-tiff("Figure 1.tiff", width = 520)
+tiff("Figure2.tiff", width = 520)
   plot(NA, xlab = "Simulation setting", ylab = "Absolute bias", cex.lab = 1.3, lwd = 2, axes = FALSE, ylim = c(-0.001, 0.12), xlim = c(0.8, 4.2))
   axis(side = 1, at = 1:4, labels = c("no EM*", "some EM", "EM", "strong EM"), cex.axis = 1.2)
   axis(side = 2, at = seq(0, 0.12, 0.02), las = 1, cex.axis = 1.2)   # ),labels = c("", "2%", "4%", "6%", "8%", "10%", "12%"))
@@ -305,7 +306,7 @@ tiff("Figure 1.tiff", width = 520)
   mtext("*EM = Effect modification", side = 1, adj = 0.05, padj = -1.8, cex = 1.2, bty = "n", outer = TRUE)
 dev.off()
 
-# Cite as: "Miguel Angel Luque-Fernandez, Daniel Redondo Sanchez, Michael Schomaker (2018). 
+# Cite as: "Miguel Angel Luque-Fernandez, Daniel Redondo-Sanchez, Michael Schomaker (2018). 
 # Evaluating the effectiveness of public health interventions under non-collapsability 
 # of the marginal odds ratio and effect modification: A Monte Carlo Simulation comparing classical
 # multivariable regression adjustment versus the G-Formula based on a cancer epidemiology illustration

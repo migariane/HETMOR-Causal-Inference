@@ -22,7 +22,7 @@ We would like to acknowledge the methodological guidance that the AJPH series "E
 MALF is supported by the Spanish National Institute of Health Carlos III Miguel Servet I Investigator Award (CP17/00206)  
 
 #### Figure legends
-**Figure (1)**. Directed Acyclic Graph.  
+**Figure 1**. Directed Acyclic Graph.  
 
 ![Figure Link](https://github.com/migariane/hetmor/blob/master/Figure1.png)  
 

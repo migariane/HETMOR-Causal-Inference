@@ -46,9 +46,9 @@ set.seed(24121980)
 # We generated data, denoted as the set of i.i.d variables O = (W=(W1, W2, W3, W4), A, Y), based on
 # the directed acyclic graph1 illustrated in Figure 1 (Directed Acyclic Graph): 
 # w1: age, was generated as Bernoulli variable with probability 0.6. 
-# w2: comorbidities, w2: socieconomic status and w3: cancer stage, were generated as ordinal variables
+# w2: socieconomic status, w3: comorbidities,and w3: cancer stage, were generated as ordinal variables
 # with five, six and four levels, respectively. 
-# The treatment vairable contrasted the effect of only chemotherapy versus chemotherapy + radiotherapy; 
+# The treatment variable contrasted the effect of only chemotherapy versus chemotherapy + radiotherapy; 
 # A = 0 chemotherapy and A = 1 chemotherapy + radiotherapy.
 # The treatment variable (A) and the potential outcomes (Y(1), Y(0)) were generated as binary indicators using log-linear models. 
 # In the treatment and outcome models, we included an interaction term between treatment with comorbidities (W2) and cancer stage (W4) based 

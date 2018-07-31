@@ -23,11 +23,11 @@ The assumptions from above can be encoded in a directed acyclic graph (DAG) (Fig
 **The question we want to answer**  
 
 A clinician may be interested in the following:     
-how different would the risk of death have been had everyone received dual therapy compared to if everyone had experienced monotherapy? The causal marginal odds ratio (MOR) answers this question. Statisticians call this a “target quantity.” Each individual has a pair of potential outcomes: the outcome they would have received had they been exposed to dual treatment (A=1), denoted Y(1), and the outcome had they been unexposed, Y(0). The MOR is defined as  
+how different would the risk of death have been had everyone received dual therapy compared to if everyone had experienced monotherapy? The causal marginal odds ratio (MOR) answers this question. Statisticians call this a “target quantity.” Each individual has a pair of potential outcomes: the outcome they would have received had they been exposed to dual treatment (A=1), denoted Y(1), and the outcome had they been unexposed, Y(0). The MOR is defined as:  
 
 ![Figure Link](https://github.com/migariane/hetmor/blob/master/MOR1.png)
 
-A common approach would be to use logistic regression to model the odds of mortality given the intervention, and adjust for the confounders (W) which are clinical stage, comorbidities, socioeconomic status and age. Note that this regression will estimate the conditional odds ratio (COR), which is 
+A common approach would be to use logistic regression to model the odds of mortality given the intervention, and adjust for the confounders (W) which are clinical stage, comorbidities, socioeconomic status and age. Note that this regression will estimate the conditional odds ratio (COR), which is: 
 
 ![Figure Link](https://github.com/migariane/hetmor/blob/master/COR1.png)  
 

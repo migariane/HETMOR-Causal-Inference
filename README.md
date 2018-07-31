@@ -21,6 +21,7 @@ The assumptions from above can be encoded in a directed acyclic graph (DAG) (Fig
 ![Figure Link](https://github.com/migariane/hetmor/blob/master/Figure1.png)  
 
 **The question we want to answer**  
+
 A clinician maybe interested in the following:     
 how different would the risk of death have been had everyone received dual therapy compared to if everyone had experienced monotherapy? The causal marginal odds ratio (MOR) answers this question. Each individual has a pair of potential outcomes: the outcome they would have received had they been exposed to dual treatment (A=1), denoted Y(1), and the outcome had they been unexposed, Y(0). The MOR is defined as [P(Y(1)=1)/(1-P(Y(1)=1))]/[P(Y(0)=1)/(1-P(Y(0)=1))]. Statisticians call this a “target quantity”.    
 

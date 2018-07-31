@@ -25,11 +25,11 @@ The assumptions from above can be encoded in a directed acyclic graph (DAG) (Fig
 A clinician may be interested in the following:     
 how different would the risk of death have been had everyone received dual therapy compared to if everyone had experienced monotherapy? The causal marginal odds ratio (MOR) answers this question. Statisticians call this a “target quantity.” Each individual has a pair of potential outcomes: the outcome they would have received had they been exposed to dual treatment (A=1), denoted Y(1), and the outcome had they been unexposed, Y(0). The MOR is defined as  
 
-![Figure Link](https://github.com/migariane/hetmor/blob/master/MOR1.tiff)
+![Figure Link](https://github.com/migariane/hetmor/blob/master/MOR1.png)
 
 A common approach would be to use logistic regression to model the odds of mortality given the intervention, and adjust for the confounders (W) which are clinical stage, comorbidities, socioeconomic status and age. Note that this regression will estimate the conditional odds ratio (COR), which is 
 
-![Figure Link](https://github.com/migariane/hetmor/blob/master/COR1.tiff)  
+![Figure Link](https://github.com/migariane/hetmor/blob/master/COR1.png)  
 
 MOR and COR are typically not identical. First, if there is effect modification, e.g. if the effect of dual therapy is different for patients with no comorbidities compared to those having hypertension, then logistic regression (possibly including an interaction of treatment with one of the confounders) will not provide a marginal effect estimate, but only one conditional on the respective morbidity. To be more precise: we obtain an odds ratio that is valid for a given group of people, say those with hypertension, but it will not give us a marginal estimate. But we are interested in a marginal estimate because we want to know if the dual therapy works in general. Of course, one may be specifically interested in patients with hypertension, but then the OR for this group is again conditional on the other variables, for example for elderly people, from a low socio-economic level, and advanced stage.        
 

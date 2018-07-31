@@ -17,9 +17,7 @@ To discuss these concepts, we are looking at an example from cancer epidemiology
 The assumptions from above can be encoded in a directed acyclic graph (DAG) (Figure 1). Here, each circle represents a variable and an arrow from A to B (A -> B) means that we assume that A causes B. The combination of these structural assumptions and appropriate statistical methods allow us to estimate the causal effect of dual therapy versus monotherapy on colorectal cancer patients' survival.  
 
 **Figure 1** Directed Acyclic Graph    
-
 ![Figure Link](https://github.com/migariane/hetmor/blob/master/Figure1.png)  
-
 **The question we want to answer**  
 
 A clinician may be interested in the following:     

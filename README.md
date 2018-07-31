@@ -46,7 +46,7 @@ where P(W=w) refers to the marginal probability of w.
 
 **A Monte-Carlo simulation**  
 
-We implement a Monte Carlo simulation based on the above population-based cancer epidemiology scenario and provide the R code for replication in this GitHub repository: ([R script for simulation](https://github.com/migariane/hetmor/blob/master/MonteCarloSimulation.r)). Briefly, we want to estimate one-year mortality risk of death (odds ratio) (Y) for cancer patients treated with monotherapy (only chemotherapy; A=0) versus dual therapy (treatment with radiotherapy and chemotherapy; A=1) while controlling for possible confounders (W). It is a relevant research question that answered at a population level may have important public health implications for cancer patients.  
+We implement a Monte Carlo simulation based on the above population-based cancer epidemiology scenario and provide the R code for replication in this GitHub repository: ([R script for simulation](https://github.com/migariane/hetmor/blob/master/MonteCarloSimulation.r)). As noted above, we are interested in how different the risk of death would have been had everyone received dual therapy compared to if everyone had experienced monotherapy. This is a relevant research question that, answered at a population level, may have an important public health implications for cancer patients.  
 
 **Data generating process**  
 

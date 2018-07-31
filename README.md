@@ -47,10 +47,10 @@ MALF is supported by the Spanish National Institute of Health Carlos III Miguel 
 #### Figure legends
 **Figure 1**. Directed Acyclic Graph.  
 
-**Figure 2**. Results from the simulation described on https://github.com/migariane/hetmor. One wants to compare the mortality risk after 1 year of patients with dual therapy (radio- and chemotherapy) with patients on dual therapy (chemotherapy only). Known confounders are age, socioeconomic status, co-morbidities, and clinical stage. The absolute bias with respect to the marginal causal odds ratio is reported, based on a sample size of 5000, and 10.000 simulation runs.   
+**Figure 2**. Results from the simulation described on https://github.com/migariane/hetmor. One wants to compare the mortality risk after 1 year of patients with dual therapy (radio- and chemotherapy) with patients on dual therapy (chemotherapy only). Known confounders are age, socioeconomic status, comorbidities, and clinical stage. The absolute bias with respect to the marginal causal odds ratio is reported, based on a sample size of 5000, and 10.000 simulation runs.   
 
 #### Thank you  
-Thank you for reading through this epidemilogical material.  
+Thank you for reading through this epidemiological material.  
 If you have updates or changes that you would like to make, please send <a href="https://github.com/migariane/hetmor" target="_blank">me</a> a pull request.
 Alternatively, if you have any questions, please e-mail us at miguel-angel.luque at lshtm.ac.uk
 

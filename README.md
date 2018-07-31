@@ -6,7 +6,7 @@ Miguel Angel Luque-Fernandez, Daniel Redondo Sanchez and Michael Schomaker
   
 ### Supplement to the AJPH's editorial letter
 
-The **American Journal of Public Health** series "Evaluating Public Health Interventions" is offering excellent practical guidance to researchers in public health.  In the 8<sup>th</sup> part of the series, a valuable introduction to effect estimation of time-invariant public health interventions was given.[1] The authors of this article suggested that in terms of bias and efficiency there is no advantage of using modern causal inference methods over classical multivariable modeling.[1] However, this statement is not always true. Most importantly, both **“effect modification”** and **“collabsibility”** are important concepts when assessing the validity of using regression for causal effect estimation.  
+The **American Journal of Public Health** series "Evaluating Public Health Interventions" is offering excellent practical guidance to researchers in public health.  In the 8<sup>th</sup> part of the series, a valuable introduction to effect estimation of time-invariant public health interventions was given.[1] The authors of this article suggested that in terms of bias and efficiency there is no advantage of using modern causal inference methods over classical multivariable modeling.[1] However, this statement is not always true. Most importantly, both **“effect modification”** and **“collapsibility”** are important concepts when assessing the validity of using regression for causal effect estimation.  
 
 **Cancer epidemiology example**  
 

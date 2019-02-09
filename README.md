@@ -79,6 +79,10 @@ You can **cite** this repository as:
 Luque-Fernandez MA, Daniel Redondo Sanchez, Michael Schomaker (2018). Effect modification and collapsibility when estimating the effect of interventions: A Monte Carlo Simulation comparing classical multivariable regression adjustment versus the G-Formula based on a cancer epidemiology illustration. GitHub repository, https://github.com/migariane/hetmor.    
 **Twitter** `@WATZILEI`  
 
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2560820.svg)](https://doi.org/10.5281/zenodo.2560820)
+
+
 ### References
 1.	Spiegelman D, Zhou X. Evaluating Public Health Interventions: 8. Causal Inference for Time-Invariant Interventions. Am J Public Health. 2018:e1-e4.  
 2.	Greenland S, Robins JM, Pearl J. Confounding and collapsibility in causal inference. Statistical Science. 1999;14(1):29-46.  

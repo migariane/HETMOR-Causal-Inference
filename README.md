@@ -65,7 +65,7 @@ MALF is supported by the Spanish National Institute of Health Carlos III Miguel 
 #### Figure legends
 **Figure 1**. Directed Acyclic Graph.  
 
-**Figure 2**. Results from the simulation described on https://github.com/migariane/hetmor. One wants to compare the mortality risk after one year of patients with dual therapy (radio- and chemotherapy) with patients on dual therapy (chemotherapy only). Known confounders are age, socioeconomic status, comorbidities, and clinical stage. The absolute bias with respect to the marginal causal odds ratio is reported, based on a sample size of 5000, and 10000 simulation runs.   
+**Figure 2**. Results from the simulation described on https://github.com/migariane/hetmor. One wants to compare the mortality risk after one year of patients with dual therapy (radio- and chemotherapy) with patients on dual therapy (chemotherapy only). Known confounders are age, socioeconomic status, comorbidities, and clinical stage. The absolute bias with respect to the marginal causal odds ratio is reported, based on a sample size of 5,000 and 10,000 simulation runs.   
 
 #### Appendix
 
@@ -98,7 +98,7 @@ We believe that it is very common that effect estimates vary with respect to con
 
 - “When effect modification is present, the effect modifiers need to be included in the model, and it has been recommended […] to report effects by each level of the modifiers”.  
 
-Yes, when adding interactions to the regression model a conditional causal estimand can be reported and this is of course principally meaningful. Note however that we then need to assume that this conditional effect measure is not modified by further variables. For example, one may be specifically interested in patients with and without hypertension, but then -when using regression including an interaction of treatment and co-morbidities (incl. hypertension)- the estimated odds ratio is still conditional on the other variables, like age and socio-economic status. For a truly marginal interpretation we need to assume that the effect measure obtained from the regression coefficients of the main and interaction variables does not vary with respect to age, socio-economic status, and clinical status – an assumption that is likely violated in many examples. 
+Yes, when adding interactions to the regression model a conditional causal estimand can be reported and this is of course principally meaningful. Note however that we then need to assume that this conditional effect measure is not modified by further variables. For example, one may be specifically interested in patients with and without hypertension, but then -when using regression including an interaction of treatment and co-morbidities (including hypertension)- the estimated odds ratio is still conditional on the other variables, like age and socio-economic status. For a truly marginal interpretation we need to assume that the effect measure obtained from the regression coefficients of the main and interaction variables does not vary with respect to age, socio-economic status, and clinical status – an assumption that is likely violated in many examples. 
 
 - “Luque-Fernandez et al. simulated examples of […] the uninterpretable odds ratio”.  
 
@@ -114,7 +114,7 @@ Our simulations contain four different cases. The probability of dying after one
 
 The MOR and COR are typically not identical, no matter what example (references [2,3]). In some applications the difference between them might be small, in some large, but we can not say beforehand how big. Using modern causal inference techniques avoids making assumptions about the difference between MOR and COR, which is a big advantage.  
 
-In summary, we believe that the effort of using the g-formula (less than 5 lines of code in R or Stata) or doubly robust techniques (1 line of code after loading a library ([TMLE](https://cran.r-project.org/web/packages/tmle/index.html), [ELTMLE](https://github.com/migariane/eltmle)) is minimal, and one has the advantage of not making any (possibly unrealistic) assumptions about effect modification and collapsibility. In our opinion, it does not matter if the “bias” is small or big, a method that avoids a certain type of bias should be preferred over one that does not. 
+In summary, we believe that the effort of using the g-formula (less than five lines of code in R or Stata) or doubly robust techniques (1 line of code after loading a library ([TMLE](https://cran.r-project.org/web/packages/tmle/index.html), [ELTMLE](https://github.com/migariane/eltmle)) is minimal, and one has the advantage of not making any (possibly unrealistic) assumptions about effect modification and collapsibility. In our opinion, it does not matter if the “bias” is small or big, a method that avoids a certain type of bias should be preferred over one that does not. 
 
 ### References
 1.	Spiegelman D, Zhou X. Evaluating Public Health Interventions: 8. Causal Inference for Time-Invariant Interventions. Am J Public Health. 2018:e1-e4.  

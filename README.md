@@ -115,7 +115,7 @@ Our simulations contain four different cases. The probability of dying after one
 
 - "Although theoretically there is no question that the odds ratio is noncollapsible […] it is rarely the case that this matters in practice”
 
-The MOR and COR are typically not identical, no matter what example (references [2,3]). In some applications the difference between them might be small, in some large, but we can not say beforehand how big. Using modern causal inference techniques avoids making assumptions about the difference between MOR and COR, which is a big advantage.  
+The MOR and COR are typically not identical, no matter what example such as references [2,3]. In some applications the difference between them might be small, in some large, but we can not say beforehand how big. Using modern causal inference techniques avoids making assumptions about the difference between MOR and COR, which is a big advantage.  
 
 In summary, we believe that the effort of using the g-formula (less than five lines of code in R or Stata) or doubly robust techniques (1 line of code after loading a library ([TMLE](https://cran.r-project.org/web/packages/tmle/index.html), [ELTMLE](https://github.com/migariane/eltmle)) is minimal, and one has the advantage of not making any (possibly unrealistic) assumptions about effect modification and collapsibility. In our opinion, it does not matter if the “bias” is small or big, a method that avoids a certain type of bias should be preferred over one that does not. 
 

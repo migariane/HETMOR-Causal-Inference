@@ -1,12 +1,11 @@
-########################################################################################################
-# Miguel Angel Luque Fernandez, Daniel Redondo-Sanchez and Michael Schomaker
-# American Journal of Public Health (AJPH)
-# Letter to the Editor 
-# Title:
-# Effect modification and collapsibility when estimating the effect of interventions:
-# A Monte Carlo Simulation comparing classical multivariable regression adjustment versus the G-Formula,
-# based on a cancer epidemiology illustration 
-########################################################################################################
+#########################################################################################################################################
+# Luque-Fernandez MA, Redondo-Sanchez D, Schomaker M.                                                                                   #
+# Effect Modification and Collapsibility in Evaluations of Public Health Interventions.                                                 #
+# American Journal of Public Health. 2019;109(3):e12-e3.                                                                                #
+#                                                                                                                                       #
+# File for simulation reported in the letter                                                                                            #
+# A full summary of letter, answer, answer to answer and code is available at. https://github.com/migariane/HETMOR-Causal-Inference     #
+#########################################################################################################################################
 
 # Copyright (c) 2018  <Miguel Angel Luque-Fernandez, Daniel Redondo-Sanchez and Michael Schomaker>
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,71 +26,59 @@
 
 ##############################################################################################
 
-# Install R packages
-# install.packages(c("simcausal"))
-
-library(simcausal)
+library(simcausal)      # Currently not on CRAN
+                        # As of 4 June 2020, available in CRAN Archive:
+                        # https://cran.r-project.org/src/contrib/Archive/simcausal/
+                        # And GitHub for the development version:
+                        # https://github.com/osofr/simcausal
 
 set.seed(24121980)
 
-##############################################################################################################################################
-# Structural setting for the relationship between variables extracted from a population-based cancer epidemiology example aiming to estimate
-# the impact of only chemotherapy versus dual therapy (chemotherapy plus radiotheraphty) on one year mortality among colorectal cancer patients
-###############################################################################################################################################
-
-# Setting the structural framework of the relationship between variables for the Monte Carlo simulation
-# We generated data, denoted as the set of i.i.d variables O = (W=(W1, W2, W3, W4), A, Y), based on
-# the directed acyclic graph1 illustrated in Figure 1 (Directed Acyclic Graph): 
-# w1: age, was generated as Bernoulli variable with probability 0.6. 
-# w2: socieconomic status, w3: comorbidities,and w3: cancer stage, were generated as ordinal variables
-# with five, six and four levels, respectively. 
-# The treatment variable contrasted the effect of only chemotherapy versus chemotherapy + radiotherapy; 
-# A = 0 chemotherapy and A = 1 chemotherapy + radiotherapy.
-# The treatment variable (A) and the potential outcomes (Y(1), Y(0)) were generated as binary indicators using log-linear models. 
-# In the treatment and outcome models, we included an interaction term between treatment with comorbidities (W2) and cancer stage (W4) based 
-# on plausible biological mechanisms such as an increased risk of comorbidities among older adults.
+###############################################
+# Data generating process for cancer example  #
+###############################################
 
 # Using library simcausal to simulate the data 
 M <- DAG.empty()
 M <- M + 
-  node("w1", # age (0/1); 1 -> Advanced age
+  node("w1", # Age (0/1); 1 -> Advanced age
        distr = "rbern", prob = 0.6) + 
-  node("w2", # ses (1/2/3/4/5); Advanced age, higher probability of belonging to higher socioeconomic status
+  node("w2", # Socioecononomic status (1/2/3/4/5); Advanced age, higher probability of belonging to higher socioeconomic status
        distr = "rcat.b1",
        probs = { 
-         plogis(-3.10 - 0.05 * w1)    # 1 = high class, 4% 
-         plogis(-1.25 - 0.04 * w1)    # 2 = high-middle class, 22%
-         plogis(-0.05 - 0.03 * w1)    # 3 = middle 49%
-         plogis(-1.65 - 0.02 * w1)    # 4 = low-middle class 16%
-         }) +                         # 5 = low class; comes from "normalizing", about 9%
-  node("w3", # comorbidities (1/2/3/4/5)
+         plogis(-3.10 - 0.05 * w1)    # 1 = Upper middle class, 4%                         
+         plogis(-1.25 - 0.04 * w1)    # 2 = Middle class, 22%                              
+         plogis(-0.05 - 0.03 * w1)    # 3 = Lower middle, 49%                              
+         plogis(-1.65 - 0.02 * w1)    # 4 = Working class, 16%                             
+         }) +                         # 5 = Last class comes from "normalizing", about 9%   
+  node("w3", # Comorbidities (1/2/3/4/5/6)
        distr = "rcat.b1",
        probs = {
-         plogis(-0.5 + 0.010 * w1 + 0.15 * w2)      # 1 = none
+         plogis(-0.5 + 0.010 * w1 + 0.15 * w2)      # 1 = None
          plogis(-1.8 + 0.005 * w1 + 0.10 * w2)      # 2 = Hypertension
          plogis(-1.6 + 0.010 * w1 + 0.12 * w2)      # 3 = Diabetes II
-         plogis(-1.5 + 0.010 * w1 + 0.15 * w2)      # 4 = other
-         plogis(-2.5 + 0.020 * w1 + 0.20 * w2)      # 5 = alzheimer
-         plogis(-2.3 + 0.015 * w1 + 0.15 * w2)      # 6 = previous heart attack
+         plogis(-1.5 + 0.010 * w1 + 0.15 * w2)      # 4 = Other
+         plogis(-2.5 + 0.020 * w1 + 0.20 * w2)      # 5 = Alzheimer
+         plogis(-2.3 + 0.015 * w1 + 0.15 * w2)      # 6 = Previous heart attack
          }) +  
-  node("w4", # cancer stage (1/2/3/4)
+  node("w4", # Cancer stage (1/2/3/4), again last stage comes from "normalizing"
        distr = "rcat.b1",
        probs = {
          plogis(-0.4 + 0.02 * w1 - 0.050 * w2)    
          plogis(-1.0 + 0.03 * w1 - 0.055 * w2)
          plogis(-1.2 + 0.01 * w1 - 0.040 * w2)
          }) + 
-  node("a", #a = 1 -> chemotherapy + radiotherapy; a = 0 chemo 
+  node("a", # Treatment: a = 1 -> dual therapy; a=0 -> monotherapy
        distr = "rbern",
        prob  = plogis(-2.3 + 0.05 * w2 + 0.25 * w3 + w4)) 
 
-# 4 setups for the outcome under different levels of effect modification: no-effect, mild, normal, and strong effects      
+# 4 setups for the outcome under different levels of effect modification (EM): no EF, mild EM, normal EM, and strong EM      
 M1 <- M + node("y", distr = "rbern", prob = 1 - plogis(4.25 + 2.9 * a - 0.65 * w1 - 0.25 * w2 - 0.2 * w3 - 0.75 * w4))
 M2 <- M + node("y", distr = "rbern", prob = 1 - plogis(4.25 + 2.9 * a - 0.65 * w1 - 0.25 * w2 - 0.2 * w3 - 0.75 * w4 - 0.10 * a * w2 - 0.20 * a * w3))
 M3 <- M + node("y", distr = "rbern", prob = 1 - plogis(4.25 + 2.9 * a - 0.65 * w1 - 0.25 * w2 - 0.2 * w3 - 0.75 * w4 - 0.25 * a * w2 - 0.35 * a * w3))
 M4 <- M + node("y", distr = "rbern", prob = 1 - plogis(4.25 + 2.9 * a - 0.65 * w1 - 0.25 * w2 - 0.2 * w3 - 0.75 * w4 - 0.35 * a * w2 - 0.45 * a * w3))
 
-# Simulate  sample (n = 5000) in line with the structure of the data
+# Simulate  sample (n = 5000) in line with the data generating process and outcome generation under M2
 Mset <- set.DAG(M2)
 Odat <- simcausal::sim(DAG = Mset, n = 5000, rndseed = 345, verbose = F)
 Odat1 <- Odat
@@ -108,9 +95,9 @@ summary(Odat1)
 # M3 interaction between treatment and covariates = heterogeneous treatment effect
 # M4 strong interaction between treatment and covariates = stronger heterogeneous treatment effect
 
-############################
-# Under M1 (no interaction) 
-############################
+#############################
+# Under M1 (no interaction) #
+#############################
 Mset <- set.DAG(M1)
 a1 <- node("a", distr = "rbern", prob = 1)
 Mset <- Mset + action("a1", nodes = a1)
@@ -127,13 +114,13 @@ Mset <- set.targetE(Mset, outcome = "y", param = "a1-a0")
 True_ATE_M1 <- eval.target(Mset, data = dat)$res       # Evaluate true ATE
 
 # True Marginal Odds Ratio of Treatment M1
-# True_mor_M1 <- (0.0352066 /(1-0.0352066)) / (0.3253395 / (1 - 0.3253395)); True_mor_M1
+# True_mor_M1 <- (0.0352066 / (1 - 0.0352066)) / (0.3253395 / (1 - 0.3253395)); True_mor_M1
 True_mor_M1 <- M1y1 * (1 - M1y0) / ((1 - M1y1) * M1y0)
 cat("MOR_M1:", True_mor_M1[[1]])
 
-##############################
-# Under M2 (mild interaction)
-##############################
+###############################
+# Under M2 (mild interaction) #
+###############################
 Mset <- set.DAG(M2)
 a1 <- node("a", distr = "rbern", prob = 1)
 Mset <- Mset + action("a1", nodes = a1)
@@ -150,13 +137,13 @@ Mset <- set.targetE(Mset, outcome = "y", param = "a1-a0")
 True_ATE_M2 <- eval.target(Mset, data = dat)$res        # Evaluate true ATE
 
 # True Marginal Odds Ratio of Treatment M2
-# True_mor_M2  <- (0.0869532  /(1-0.0869532))/(0.3253395/(1-0.3253395)); True_mor_M2
+# True_mor_M2  <- (0.0869532  / (1 - 0.0869532)) / (0.3253395 / (1 - 0.3253395)); True_mor_M2
 True_mor_M2 <- M2y1 * (1 - M2y0) / ((1 - M2y1) * M2y0)
 cat("MOR_M2:", True_mor_M2[[1]])
 
-#########################
-# Under M3 (interaction)
-#########################
+##########################
+# Under M3 (interaction) #
+##########################
 Mset <- set.DAG(M3)
 a1 <- node("a", distr = "rbern", prob = 1)
 Mset <- Mset + action("a1", nodes = a1)
@@ -173,13 +160,13 @@ Mset <- set.targetE(Mset, outcome = "y", param = "a1-a0")
 True_ATE_M3 <- eval.target(Mset, data = dat)$res        # Evaluate true ATE
 
 # True Marginal Odds Ratio of Treatment M3
-# True_mor_M3  <- (0.1830828 /(1-0.1830828))/(0.3253395/(1-0.3253395))
+# True_mor_M3  <- (0.1830828 / (1 - 0.1830828)) / (0.3253395 / (1 - 0.3253395))
 True_mor_M3 <- M3y1 * (1 - M3y0) / ((1 - M3y1) * M3y0)
 cat("MOR_M3:", True_mor_M3[[1]])
 
-#################################
-# Under M4 (stronger interaction)
-#################################
+##################################
+# Under M4 (stronger interaction)#
+##################################
 Mset <- set.DAG(M4)
 a1 <- node("a", distr = "rbern", prob = 1)
 Mset <- Mset + action("a1", nodes = a1)
@@ -196,22 +183,22 @@ Mset <- set.targetE(Mset, outcome = "y", param = "a1-a0")
 True_ATE_M4 <- eval.target(Mset, data = dat)$res        # Evaluate true ATE
 
 # True Marginal Odds Ratio of Treatment M3
-# True_mor_M4  <- (0.2687067   /(1-0.2687067))/(0.3253395/(1-0.3253395))
+# True_mor_M4  <- (0.2687067 / (1 - 0.2687067)) / (0.3253395 / (1 - 0.3253395))
 True_mor_M4 <- M4y1 * (1 - M4y0) / ((1 - M4y1) * M4y0)
 cat("MOR_M4:", True_mor_M4[[1]])
 
-# Plot for the Directed Acyclic Graph
-pdf("plot-dag.pdf", width = 10, height = 6)
+# Plot for the Directed Acyclic Graph implied by the structural causal model
+# pdf("plot-dag.pdf", width = 10, height = 6)
   plotDAG(Mset, xjitter = 0.3, yjitter = 0.04,
           edge_attrs = list(width = 0.5, arrow.width = 0.2, arrow.size = 0.3),
           vertex_attrs = list(size = 12, label.cex = 0.8))
-dev.off()
+# dev.off()
 
 ##########################
 # Monte Carlo Simulation #
 ##########################
 
-# Number of simulations
+# Number of simulation runs
 R <- 10000
 
 results_reg <- matrix(NA, ncol = 4, nrow = R)
@@ -220,12 +207,11 @@ results_g   <- matrix(NA, ncol = 4, nrow = R)
 for(r in 1:R) try({
     if (r%%10 == 0) cat(paste("This is simulation run number", r, "\n"))
     # M1
-    ###########################
     Mset <- suppressWarnings(set.DAG(M1, verbose = FALSE))
     simdat <- suppressWarnings(simcausal::sim(DAG = Mset, n = 5000, verbose = FALSE))
-    #
+    
     results_reg[r, 1] <- exp(coefficients(glm(y ~ a + w1 + w2 + w3 + w4, data = simdat, family = binomial)))[2]
-    #
+    
     is1 <- simdat
     is1$a <- rep(1, dim(simdat)[1])
     is2 <- simdat
@@ -233,12 +219,11 @@ for(r in 1:R) try({
     ms1 <- glm(y ~ a + w1 + w2 + w3 + w4, data = simdat, family = binomial)
     results_g[r, 1] <- ((mean(predict(ms1, type = "response", newdata = is1))) / (1 - mean(predict(ms1, type = "response", newdata = is1)))) / ((mean(predict(ms1, type = "response", newdata = is2))) / (1 - mean(predict(ms1, type = "response", newdata = is2))))
     # M2
-    ##########################
     Mset <- suppressWarnings(set.DAG(M2, verbose = FALSE))
     simdat <- suppressWarnings(simcausal::sim(DAG = Mset, n = 5000, verbose = FALSE))
-    #
+    
     results_reg[r, 2] <- exp(coefficients(glm(y ~ a + w1 + w2 + w3 + w4, data = simdat, family = binomial)))[2]
-    #
+    
     is1 <- simdat
     is1$a <- rep(1, dim(simdat)[1])
     is2 <- simdat
@@ -246,12 +231,11 @@ for(r in 1:R) try({
     ms1 <- glm(y ~ a + w1 + w2 + w3 + w4 + a * w2 + a * w3, data = simdat, family = binomial)
     results_g[r, 2] <- ((mean(predict(ms1, type = "response", newdata = is1))) / (1 - mean(predict(ms1, type = "response", newdata = is1))))/((mean(predict(ms1, type = "response", newdata = is2))) / (1 - mean(predict(ms1, type = "response", newdata = is2))))
     # M3
-    ##########################
     Mset <- suppressWarnings(set.DAG(M3, verbose = FALSE))
     simdat <- suppressWarnings(simcausal::sim(DAG = Mset, n = 5000, verbose = FALSE))
-    #
+
     results_reg[r, 3] <- exp(coefficients(glm(y ~ a + w1 + w2 + w3 + w4, data = simdat, family = binomial)))[2]
-    #
+    
     is1 <- simdat
     is1$a <- rep(1, dim(simdat)[1])
     is2 <- simdat
@@ -259,26 +243,25 @@ for(r in 1:R) try({
     ms1 <- glm(y ~ a + w1 + w2 + w3 + w4 + a*w2 + a * w3, data = simdat, family = binomial)
     results_g[r, 3] <- ((mean(predict(ms1, type = "response", newdata = is1))) / (1 - mean(predict(ms1, type = "response", newdata = is1)))) / ((mean(predict(ms1, type = "response", newdata = is2))) / (1 - mean(predict(ms1, type = "response", newdata = is2))))
     # M4
-    ##########################
     Mset <- suppressWarnings(set.DAG(M4, verbose = F))
     simdat <- suppressWarnings(simcausal::sim(DAG = Mset, n = 5000, verbose = FALSE))
-    #
+    
     results_reg[r, 4] <- exp(coefficients(glm(y ~ a + w1 + w2 + w3 + w4, data = simdat, family = binomial)))[2]
-    #
+    
     is1 <- simdat
     is1$a <- rep(1, dim(simdat)[1])
     is2 <- simdat
     is2$a <- rep(0, dim(simdat)[1])
-    ms1 <- glm(y ~ a + w1 + w2 + w3 + w4 + a*w2 + a*w3, data = simdat, family = binomial)
+    ms1 <- glm(y ~ a + w1 + w2 + w3 + w4 + a * w2 + a * w3, data = simdat, family = binomial)
     results_g[r, 4] <- ((mean(predict(ms1, type = "response", newdata = is1)))/(1 - mean(predict(ms1, type = "response", newdata = is1)))) / ((mean(predict(ms1, type = "response", newdata = is2))) / (1 - mean(predict(ms1, type = "response", newdata = is2))))
-    ##########################
 })
 
-# Estimating BIAS classic naive regression analysis versus G-Methods based on G-Formula
+# Estimating BIAS for i) naive regression analysis  and ii) g-formula
 BIAS_reg <- abs(apply(results_reg, 2, mean) - c(True_mor_M1, True_mor_M2, True_mor_M3, True_mor_M4))
 BIAS_g   <- abs(apply(results_g,   2, mean) - c(True_mor_M1, True_mor_M2, True_mor_M3, True_mor_M4))
 
 # Plot Bias.pdf
+# change path if required
 pdf("Figure2.pdf", width = 8) 
   plot(NA, xlab = "Simulation setting", ylab = "Absolute bias", cex.lab = 1.3, lwd = 2, axes = FALSE, ylim = c(-0.001, 0.12), xlim = c(0.8, 4.2))
   axis(side = 1, at = 1:4, labels = c("no EM*", "some EM", "EM", "strong EM"), cex.axis = 1.2)
@@ -302,7 +285,6 @@ tiff("Figure2.tiff", width = 520)
   mtext("*EM = Effect modification", side = 1, adj = 0.05, padj = -1.8, cex = 1.2, bty = "n", outer = TRUE)
 dev.off()
 
-# Cite as: "Miguel Angel Luque-Fernandez, Daniel Redondo-Sanchez, Michael Schomaker (2018). 
-# Effect modification and collapsibility when estimating the effect of interventions:
-# A Monte Carlo Simulation comparing classical multivariable regression adjustment versus the G-Formula, 
-# based on a cancer epidemiology illustration
+# Cite as: Luque-Fernandez MA, Redondo-Sanchez D, Schomaker M. 
+# Effect Modification and Collapsibility in Evaluations of Public Health Interventions. 
+# American Journal of Public Health. 2019;109(3):e12-e3.
